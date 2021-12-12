@@ -1,46 +1,44 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
+using RPG.Movement;
 
-public class PlayerControl : MonoBehaviour
+namespace RPG.Control
 {
-    [SerializeField] Transform target;
-
-    Animator animator;
-    NavMeshAgent navMeshAgent;
-
-
-    private void Awake()
+    public class PlayerControl : MonoBehaviour
     {
-        animator = GetComponent<Animator>();
-        navMeshAgent = GetComponent<NavMeshAgent>();
-    }
+        [SerializeField] Transform target;
 
-    void Update()
-    {
-        MoveToCursor();
-        UpdateAnimator();
-    }
+        Mover mover;
 
-    void MoveToCursor()
-    {     
-        if (Input.GetMouseButton(0))
+
+        private void Awake()
         {
-          Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            Debug.DrawRay(ray.origin, ray.direction * 100, Color.red, 3f);
+            mover = GetComponent<Mover>();
+        }
+
+        void Update()
+        {
+            GetInput();
+        }
+
+        void GetInput()
+        {
+            if (Input.GetMouseButton(0))
+            {
+                MoveToCursor();
+            }
+        }
+
+        void MoveToCursor()
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
-            {          
-                navMeshAgent.destination = hit.point;
-            }      
+            {
+                mover.MoveTo(hit.point);
+            }
         }
     }
-
-    void UpdateAnimator()
-    {
-        Vector3 localVelocity = transform.InverseTransformDirection(navMeshAgent.velocity);
-        float speed = localVelocity.z;
-        animator.SetFloat("speed", speed);
-    }
 }
+
