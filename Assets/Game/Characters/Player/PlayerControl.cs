@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using RPG.Movement;
+using RPG.Combat;
 
 namespace RPG.Control
 {
@@ -10,34 +11,55 @@ namespace RPG.Control
         [SerializeField] Transform target;
 
         Mover mover;
+        Fighter fighter;
 
 
         private void Awake()
         {
             mover = GetComponent<Mover>();
+            fighter = GetComponent<Fighter>();
         }
 
         void Update()
         {
-            GetInput();
+            if (InteractWithCombat()) return;
+            if (InteractWithMovement()) return;         
         }
 
-        void GetInput()
+        bool InteractWithCombat()
         {
-            if (Input.GetMouseButton(0))
+            RaycastHit[] hitResults = Physics.RaycastAll(GetMouseRay());
+            foreach (RaycastHit hit in hitResults)
             {
-                MoveToCursor();
+                EnemyTarget target = hit.transform.GetComponent<EnemyTarget>();
+                if (!target) continue; //Continue the loop, skipping the following.
+
+                if (Input.GetMouseButtonDown(0))
+                {                
+                    fighter.Attack(target);
+                }
+                return true;
             }
+            return false;
         }
 
-        void MoveToCursor()
+        bool InteractWithMovement()
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit))
+            RaycastHit hitResult;
+            if (Physics.Raycast(GetMouseRay(), out hitResult))
             {
-                mover.MoveTo(hit.point);
+                if (Input.GetMouseButton(0))
+                {
+                    mover.StartMoveAction(hitResult.point);                    
+                }
+                return true;
             }
+            return false;
+        }
+
+        private static Ray GetMouseRay()
+        {
+            return Camera.main.ScreenPointToRay(Input.mousePosition);
         }
     }
 }
