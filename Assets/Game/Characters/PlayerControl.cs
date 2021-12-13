@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using RPG.Movement;
 using RPG.Combat;
+using UnityEngine.AI;
 
 namespace RPG.Control
 {
@@ -34,9 +35,9 @@ namespace RPG.Control
                 EnemyTarget target = hit.transform.GetComponent<EnemyTarget>();
                 if (!target) continue; //Continue the loop, skipping the following.
 
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButton(0))
                 {                
-                    fighter.Attack(target);
+                    fighter.Attack(target.gameObject);
                 }
                 return true;
             }
@@ -61,6 +62,15 @@ namespace RPG.Control
         {
             return Camera.main.ScreenPointToRay(Input.mousePosition);
         }
+
+        //Broadcast from Health
+        public void Death()
+        {
+            GetComponent<CapsuleCollider>().enabled = false;
+            GetComponent<NavMeshAgent>().enabled = false;
+            enabled = false;
+        }
+
     }
 }
 

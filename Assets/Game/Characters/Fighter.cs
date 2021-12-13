@@ -14,6 +14,7 @@ namespace RPG.Combat
 
         float timeSinceLastAttack;
         Health target;
+        public Health Target { get { return target; } set { target = value; } }
         Animator animator;
 
         void Awake()
@@ -32,7 +33,7 @@ namespace RPG.Combat
                 AttackBehavior();                
            }
         }
-        public void Attack(EnemyTarget enemyTarget)
+        public void Attack(GameObject enemyTarget)
         {
             GetComponent<ActionScheduler>().StartAction(this);
             target = enemyTarget.GetComponent<Health>();

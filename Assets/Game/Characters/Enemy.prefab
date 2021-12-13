@@ -64,6 +64,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 458561063, guid: e2003dd9c4e4bbd4db6096cd600aab6e, type: 3}
+      propertyPath: m_Speed
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 420735347172395305, guid: e2003dd9c4e4bbd4db6096cd600aab6e, type: 3}
+      propertyPath: weaponRange
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1954023403588421279, guid: e2003dd9c4e4bbd4db6096cd600aab6e, type: 3}
       propertyPath: m_Name
       value: Enemy
@@ -145,3 +153,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31cdefdcd5a2f32409babeba63570c2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2919183624417679534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 207097725290446557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 083115c933a96a040ba641357764e9e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chaseDistance: 5
