@@ -103,6 +103,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7086acaf4b073e04cad3b351af18bc9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  walkSpeed: 2
+  runSpeed: 5
 --- !u!114 &420735347172395305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130,7 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0978047ef061a894889cf49289e5724e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  healthPoints: 100
 --- !u!195 &458561063
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -185,4 +187,4 @@ CapsuleCollider:
   m_Radius: 0.25
   m_Height: 1.8
   m_Direction: 1
-  m_Center: {x: 0, y: 0.9, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
