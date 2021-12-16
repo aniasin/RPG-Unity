@@ -87,6 +87,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SavingSystem
       objectReference: {fileID: 0}
+    - target: {fileID: 7731541134241141732, guid: f74282d1f17b6564f945c7343442a1d6, type: 3}
+      propertyPath: FadeInTime
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f74282d1f17b6564f945c7343442a1d6, type: 3}
 --- !u!4 &6775023176139096548 stripped

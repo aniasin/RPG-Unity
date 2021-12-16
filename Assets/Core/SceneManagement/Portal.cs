@@ -20,7 +20,7 @@ namespace RPG.SceneManagement
 
         SavingWrapper savingWrapper;
 
-         void Start()
+         void Awake()
         {
             savingWrapper = FindObjectOfType<SavingWrapper>();
         }
@@ -51,6 +51,7 @@ namespace RPG.SceneManagement
 
             LoadScene();
             UpdatePlayer(FindOtherPortal());
+            SaveScene();
 
             yield return new WaitForSeconds(fadeWaitTime);
             yield return fader.FadeIn(fadeInTime);
