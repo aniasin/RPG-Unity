@@ -11,43 +11,55 @@ namespace RPG.Saving
 
         public void Save(string saveFile)
         {
-            string path = GetPathFromSaveFile(saveFile);
-            print("Saving to " + path);
-            using (FileStream stream = File.Open(path, FileMode.Create))
-            {
-                  BinaryFormatter formatter = new BinaryFormatter();
-                formatter.Serialize(stream, CatureState());
-            }
+            Dictionary<string, object> state = LoadFile(saveFile);               
+            CaptureState(state);
+            SaveFile(saveFile, state);
         }
 
         public void Load(string saveFile)
         {
+            RestoreState(LoadFile(saveFile));
+        }
+
+        void SaveFile(string saveFile, object state)
+        {
             string path = GetPathFromSaveFile(saveFile);
-            print("Loading to " + path);
-            using (FileStream stream = File.Open(path, FileMode.Open))
+            using (FileStream stream = File.Open(path, FileMode.Create))
             {
                 BinaryFormatter formatter = new BinaryFormatter();
-                RestoreState(formatter.Deserialize(stream));
+                formatter.Serialize(stream, state);
             }
         }
 
-        object CatureState()
+        Dictionary<string, object> LoadFile(string saveFile)
         {
-            Dictionary<string, object> state = new Dictionary<string, object>();
+            string path = GetPathFromSaveFile(saveFile);
+            if (!File.Exists(path)) return new Dictionary<string, object>();
+
+            using (FileStream stream = File.Open(path, FileMode.Open))
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                return (Dictionary<string, object>)formatter.Deserialize(stream);
+            }
+        }
+
+        void CaptureState(Dictionary<string, object> state)
+        {
             foreach (SaveableEntity saveable in FindObjectsOfType<SaveableEntity>())
             {
                 state[saveable.GetUniqueId()] = saveable.CaptureState();
             }
-            return state;
         }
 
-        void RestoreState(object state)
-        {
-            Dictionary<string, object> stateDict = (Dictionary<string, object>) state;
-            foreach(SaveableEntity saveable in FindObjectsOfType<SaveableEntity>())
+        void RestoreState(Dictionary<string, object> stateDict)
+        {            
+            foreach (SaveableEntity saveable in FindObjectsOfType<SaveableEntity>())
             {
-                saveable.RestoreState(stateDict[saveable.GetUniqueId()]);
-           
+                string id = saveable.GetUniqueId();
+                if (stateDict.ContainsKey(id))
+                {
+                    saveable.RestoreState(stateDict[id]);
+                }              
             }
         }
 

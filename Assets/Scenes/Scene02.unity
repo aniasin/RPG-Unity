@@ -137,7 +137,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -6611822265417260297, guid: 6878a6dad209205419dece329d3aa6b9, type: 3}
       propertyPath: portalId
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -6611822265417260297, guid: 6878a6dad209205419dece329d3aa6b9, type: 3}
       propertyPath: sceneIndex
@@ -307,6 +307,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2505273499434179374, guid: b380b830e4007e84ba5c93c1566ccfb3, type: 3}
+      propertyPath: uniqueIdentifier
+      value: 55320887-7303-4eeb-8278-bc68271c1232
+      objectReference: {fileID: 0}
     - target: {fileID: 2672997132291350044, guid: b380b830e4007e84ba5c93c1566ccfb3, type: 3}
       propertyPath: m_Name
       value: Core
@@ -561,7 +565,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -6611822265417260297, guid: 6878a6dad209205419dece329d3aa6b9, type: 3}
       propertyPath: portalId
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -6611822265417260297, guid: 6878a6dad209205419dece329d3aa6b9, type: 3}
       propertyPath: sceneIndex

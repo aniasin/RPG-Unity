@@ -1022,8 +1022,6 @@ PlayableDirector:
   m_SceneBindings:
   - key: {fileID: -1078013524391298545, guid: 18e5d6e45e772d74dbedd7cee63d10ac, type: 2}
     value: {fileID: 1705483819}
-  - key: {fileID: 4063434310015975294, guid: 18e5d6e45e772d74dbedd7cee63d10ac, type: 2}
-    value: {fileID: 769397877}
   m_ExposedReferences:
     m_References:
     - 999dca9756ea59448bd9a0f6917295f0: {fileID: 574196861}
@@ -1991,7 +1989,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &939128387
 Transform:
   m_ObjectHideFlags: 0
@@ -2579,6 +2577,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -6611822265417260297, guid: 6878a6dad209205419dece329d3aa6b9, type: 3}
+      propertyPath: portalId
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -6611822265417260297, guid: 6878a6dad209205419dece329d3aa6b9, type: 3}
       propertyPath: position.x
       value: 15.5
@@ -4700,6 +4702,22 @@ PrefabInstance:
     - target: {fileID: 2672997132291350045, guid: b380b830e4007e84ba5c93c1566ccfb3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2672997132493725736, guid: b380b830e4007e84ba5c93c1566ccfb3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.049928203
+      objectReference: {fileID: 0}
+    - target: {fileID: 2672997132493725736, guid: b380b830e4007e84ba5c93c1566ccfb3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.021932308
+      objectReference: {fileID: 0}
+    - target: {fileID: 2672997132493725736, guid: b380b830e4007e84ba5c93c1566ccfb3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.92229515
+      objectReference: {fileID: 0}
+    - target: {fileID: 2672997132493725736, guid: b380b830e4007e84ba5c93c1566ccfb3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.38261977
       objectReference: {fileID: 0}
     - target: {fileID: 7910139883643909502, guid: b380b830e4007e84ba5c93c1566ccfb3, type: 3}
       propertyPath: persistentObjectPrefab

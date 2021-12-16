@@ -1,12 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using RPG.Core;
+using RPG.Saving;
 
 namespace RPG.Movement
 {
-    public class Mover : MonoBehaviour, IAction
+    public class Mover : MonoBehaviour, IAction, ISavable
     {
         [SerializeField] float walkSpeed = 2f;
         [SerializeField] float runSpeed = 5f;
@@ -44,13 +43,26 @@ namespace RPG.Movement
         {
             navMeshAgent.destination = transform.position;
         }
-
         
         void UpdateAnimator()
         {
             Vector3 localVelocity = transform.InverseTransformDirection(navMeshAgent.velocity);
             float speed = localVelocity.z;
             animator.SetFloat("speed", speed);
+        }
+
+        public void RestoreState(object state)
+        {
+            SerializableVector3 position = (SerializableVector3)state;
+            GetComponent<NavMeshAgent>().enabled = false;
+            transform.position = position.GetVector3();
+            GetComponent<NavMeshAgent>().enabled = true;
+            GetComponent<ActionScheduler>().CancelCurrentAction();
+        }
+
+        public object CaptureState()
+        {
+            return new SerializableVector3(transform.position);
         }
     }
 
