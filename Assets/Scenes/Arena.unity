@@ -1249,6 +1249,10 @@ PrefabInstance:
       propertyPath: healthPoints
       value: 60
       objectReference: {fileID: 0}
+    - target: {fileID: 3681548616390485971, guid: 41fc6f07c8d6c7c49b69d196bed2c709, type: 3}
+      propertyPath: uniqueIdentifier
+      value: 26992389-5960-4b75-9e83-700b66d34ff8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41fc6f07c8d6c7c49b69d196bed2c709, type: 3}
 --- !u!4 &693415268 stripped
@@ -1578,7 +1582,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 769397874}
-  m_LocalRotation: {x: 0.00012509136, y: 0.15921412, z: -0.000020173646, w: 0.98724407}
+  m_LocalRotation: {x: 0.00002444516, y: 0.999883, z: -0.0016064754, w: 0.0152148595}
   m_LocalPosition: {x: 11.571041, y: 6.6800814, z: -1.8502302}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1996,7 +2000,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 939128386}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.46, y: 0, z: -18.59}
+  m_LocalPosition: {x: -1.15, y: 0, z: -1.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 976184860}
@@ -2069,6 +2073,10 @@ PrefabInstance:
     - target: {fileID: 2919183624417679534, guid: 41fc6f07c8d6c7c49b69d196bed2c709, type: 3}
       propertyPath: suspicionTime
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3681548616390485971, guid: 41fc6f07c8d6c7c49b69d196bed2c709, type: 3}
+      propertyPath: uniqueIdentifier
+      value: fcbf7c9b-7725-4a4f-9c6e-8d746a8b6580
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41fc6f07c8d6c7c49b69d196bed2c709, type: 3}
@@ -2799,6 +2807,10 @@ PrefabInstance:
       propertyPath: suspicionTime
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 3681548616390485971, guid: 41fc6f07c8d6c7c49b69d196bed2c709, type: 3}
+      propertyPath: uniqueIdentifier
+      value: b6a0b893-4788-496c-a8e5-461342b2ce3b
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41fc6f07c8d6c7c49b69d196bed2c709, type: 3}
 --- !u!1 &1176682016
@@ -3228,6 +3240,10 @@ PrefabInstance:
       propertyPath: suspicionTime
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 3681548616390485971, guid: 41fc6f07c8d6c7c49b69d196bed2c709, type: 3}
+      propertyPath: uniqueIdentifier
+      value: 989bd899-ed2f-42c9-abf0-1b9f6e9315a4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41fc6f07c8d6c7c49b69d196bed2c709, type: 3}
 --- !u!4 &1309407962 stripped
@@ -3511,6 +3527,10 @@ PrefabInstance:
       propertyPath: patrolPath
       value: 
       objectReference: {fileID: 2115824496}
+    - target: {fileID: 3681548616390485971, guid: 41fc6f07c8d6c7c49b69d196bed2c709, type: 3}
+      propertyPath: uniqueIdentifier
+      value: 07b338f0-30cf-48b6-b19c-e57678cf1015
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41fc6f07c8d6c7c49b69d196bed2c709, type: 3}
 --- !u!4 &1578085164 stripped
@@ -3577,7 +3597,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1598136664}
-  m_LocalRotation: {x: 0.3192084, y: -0.46822134, z: 0.18621542, w: 0.8026198}
+  m_LocalRotation: {x: -0.11156254, y: 0.8683433, z: -0.22710405, w: -0.42656472}
   m_LocalPosition: {x: 11.837423, y: 16.173342, z: -3.8439598}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -4629,6 +4649,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2505273499434179374, guid: b380b830e4007e84ba5c93c1566ccfb3, type: 3}
+      propertyPath: uniqueIdentifier
+      value: 8c16e860-3ec3-4493-8f2f-53ec4a4a230f
+      objectReference: {fileID: 0}
     - target: {fileID: 2672997132291350044, guid: b380b830e4007e84ba5c93c1566ccfb3, type: 3}
       propertyPath: m_Name
       value: Core

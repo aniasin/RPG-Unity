@@ -1,8 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
 namespace RPG.Saving
@@ -16,8 +15,8 @@ namespace RPG.Saving
             print("Saving to " + path);
             using (FileStream stream = File.Open(path, FileMode.Create))
             {
-                byte[] buffer = SerializeVector(GetPlayerTransform().position);
-                stream.Write(buffer, 0, buffer.Length);
+                  BinaryFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(stream, CatureState());
             }
         }
 
@@ -27,22 +26,31 @@ namespace RPG.Saving
             print("Loading to " + path);
             using (FileStream stream = File.Open(path, FileMode.Open))
             {
-                byte[] buffer = new byte[stream.Length];
-                stream.Read(buffer, 0, buffer.Length);
-                Vector3 position = DeserializeVector(buffer);
-                SetPlayerTransform(position);
+                BinaryFormatter formatter = new BinaryFormatter();
+                RestoreState(formatter.Deserialize(stream));
             }
         }
-        Transform GetPlayerTransform()
+
+        object CatureState()
         {
-            return GameObject.FindGameObjectWithTag("Player").transform;
+            Dictionary<string, object> state = new Dictionary<string, object>();
+            foreach (SaveableEntity saveable in FindObjectsOfType<SaveableEntity>())
+            {
+                state[saveable.GetUniqueId()] = saveable.CaptureState();
+            }
+            return state;
         }
 
-        void SetPlayerTransform(Vector3 position)
+        void RestoreState(object state)
         {
-            Transform playerTransform = GetPlayerTransform();
-            playerTransform.position = position;
+            Dictionary<string, object> stateDict = (Dictionary<string, object>) state;
+            foreach(SaveableEntity saveable in FindObjectsOfType<SaveableEntity>())
+            {
+                saveable.RestoreState(stateDict[saveable.GetUniqueId()]);
+           
+            }
         }
+
 
         byte[] SerializeVector(Vector3 vector)
         {
