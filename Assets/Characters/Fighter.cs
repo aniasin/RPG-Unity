@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using RPG.Movement;
 using RPG.Core;
@@ -8,9 +6,10 @@ namespace RPG.Combat
 {
     public class Fighter : MonoBehaviour, IAction
     {
-        [SerializeField] float weaponRange = 2;
-        [SerializeField] float weaponDamage = 10;
-        [SerializeField] float weaponSpeed = 1;
+        [SerializeField] Transform rightHandTransform;
+        [SerializeField] Transform leftHandTransform;
+        [SerializeField] Weapon defaultWeapon;
+        Weapon currentWeapon;
 
         float timeSinceLastAttack;
         Health target;
@@ -22,17 +21,28 @@ namespace RPG.Combat
             animator = GetComponent<Animator>();
         }
 
+        void Start()
+        {
+            EquipWeapon(defaultWeapon);
+        }
+
         void Update()
         {
             timeSinceLastAttack += Time.deltaTime;
             if (!target || target.IsDead)  return;
            GetComponent<Mover>().MoveTo(target.transform.position, true);
-           if (Vector3.Distance(target.transform.position, transform.position) <= weaponRange)
+           if (Vector3.Distance(target.transform.position, transform.position) <= currentWeapon.WeaponRange)
            {
                 GetComponent<Mover>().Cancel();
                 AttackBehavior();                
            }
         }
+        public void EquipWeapon(Weapon weapon)
+        {
+            weapon.Spawn(rightHandTransform, leftHandTransform, animator);
+            currentWeapon = weapon;
+        }
+
         public void Attack(GameObject enemyTarget)
         {
             GetComponent<ActionScheduler>().StartAction(this);
@@ -42,7 +52,7 @@ namespace RPG.Combat
         void AttackBehavior()
         {
             transform.LookAt(target.transform);
-            if (timeSinceLastAttack >= weaponSpeed)
+            if (timeSinceLastAttack >= currentWeapon.WeaponSpeed)
             {                
                 //Triggers Hit() event.
                 timeSinceLastAttack = 0;
@@ -55,14 +65,6 @@ namespace RPG.Combat
             animator.ResetTrigger("stopAttacking");
             animator.SetTrigger("IsAttacking");
         }
-
-        //Animation Event
-        void Hit()
-        {
-            if (!target) return;
-            target.TakeDamage(weaponDamage);
-        }
-
         public void Cancel()
         {
             StopAttack();
@@ -74,6 +76,21 @@ namespace RPG.Combat
             animator.ResetTrigger("IsAttacking");
             animator.SetTrigger("stopAttacking");
         }
+
+        //Animation Events
+        void Hit()
+        {
+            if (!target) return;
+            target.TakeDamage(currentWeapon.WeaponDamage);
+        }
+
+        void Shoot()
+        {
+            if (!target) return;
+            currentWeapon.SpawnProjectile(target, rightHandTransform, leftHandTransform);
+        }
+
+
 
     }
 }
