@@ -1,11 +1,14 @@
 using RPG.Core;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace RPG.Combat
 {
     public class Projectile : MonoBehaviour
     {
         [SerializeField] float speed = 50;
+        [SerializeField] bool isHomeSeeking;
+        [SerializeField] GameObject hitEffect;
 
         float damage;
         public float Damage { get { return damage; } set { damage = value; } }
@@ -14,11 +17,16 @@ namespace RPG.Combat
 
         bool hasAimPosition;
 
+        private void Start()
+        {
+            Destroy(gameObject, 10);
+        }
+
         void Update()
         {
             if (targetHealth == null) return;
 
-            if (!hasAimPosition)
+            if (!hasAimPosition || isHomeSeeking)
             {
                 transform.LookAt(GetAimPosition());
             }            
@@ -29,7 +37,15 @@ namespace RPG.Combat
          Vector3 GetAimPosition()
         {
             hasAimPosition = true;
-            return targetHealth.transform.position + Vector3.up;
+            float velocityX = 0;
+            float velocityZ = 0;
+            if (!isHomeSeeking)
+            {
+                velocityX = Mathf.Clamp01(targetHealth.GetComponent<NavMeshAgent>().velocity.x);
+                velocityZ = Mathf.Clamp01(targetHealth.GetComponent<NavMeshAgent>().velocity.z);
+            }
+            Vector3 offset = new Vector3(velocityX, 1, velocityZ);
+            return targetHealth.transform.position + offset;
         }
 
         void OnTriggerEnter(Collider other)
@@ -37,6 +53,11 @@ namespace RPG.Combat
             if (other.gameObject.GetComponent<Health>() == targetHealth)
             {
                 targetHealth.TakeDamage(damage);
+            }
+            if (hitEffect)
+            {
+                GameObject impact =Instantiate(hitEffect, other.transform.position, other.transform.rotation);
+                Destroy(impact, 5);
             }
             Destroy(gameObject);
         }

@@ -10,10 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f0b8cc900987be540ae8339154dc149c, type: 3}
-  m_Name: Sword
+  m_Name: Magic
   m_EditorClassIdentifier: 
-  weaponPrefab: {fileID: 1348515257957480890, guid: d49da45adaae9fa4da129ad27eda30e6, type: 3}
-  animatorOverride: {fileID: 22100000, guid: 61f9bfce7d00ca74cb5161470d03ba3f, type: 2}
-  weaponDamage: 12
-  weaponSpeed: 1
-  weaponRange: 3
+  weaponPrefab: {fileID: 1348515257957480890, guid: ec60aa195b3d2e744a7472c8cd45a231, type: 3}
+  projectile: {fileID: 5572322127583478127, guid: d6ed70ca07528e040853e68a0741ceac, type: 3}
+  isLeftHand: 0
+  animatorOverride: {fileID: 22100000, guid: 555a0d0dcf0d49641b033cf36ebddeb0, type: 2}
+  weaponDamage: 25
+  weaponSpeed: 3
+  weaponRange: 25

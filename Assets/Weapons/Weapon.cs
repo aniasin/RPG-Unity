@@ -28,15 +28,22 @@ namespace RPG.Combat
             Transform handTransfor = isLeftHand ? leftHand : rightHand;
             weaponInstance = Instantiate(weaponPrefab, handTransfor);
             weaponInstance.name = weaponName;
+
+            var overrideController = animator.runtimeAnimatorController as AnimatorOverrideController;
             if (animator)
             {
                 animator.runtimeAnimatorController = animatorOverride;
-            }            
+            }
+            else if (overrideController)
+            {
+               animator.runtimeAnimatorController = overrideController.runtimeAnimatorController;
+            }
         }
 
         public void SpawnProjectile(Health targetHealth, Transform rightHand, Transform leftHand)
         {
-            Projectile currentProjectile = Instantiate(projectile, rightHand.position, Quaternion.identity);
+            Transform handTransform = isLeftHand ? rightHand : leftHand;
+            Projectile currentProjectile = Instantiate(projectile, handTransform.position, Quaternion.identity);
             currentProjectile.TargetHealth = targetHealth;
             currentProjectile.Damage = weaponDamage;
         }
