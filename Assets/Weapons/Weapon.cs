@@ -1,5 +1,5 @@
 
-using RPG.Core;
+using RPG.Attributes;
 using UnityEngine;
 
 namespace RPG.Combat
@@ -7,10 +7,10 @@ namespace RPG.Combat
     [CreateAssetMenu(fileName = "Weapon", menuName = "Weapons/Make New Weapon", order = 0)]
     public class Weapon : StyledScriptableObject
     {
-        [SerializeField] GameObject weaponPrefab;
-        [SerializeField] Projectile projectile;
-        [SerializeField] bool isLeftHand;
-        [SerializeField] AnimatorOverrideController animatorOverride;
+        [SerializeField] GameObject weaponPrefab = null;
+        [SerializeField] Projectile projectile = null;
+        [SerializeField] bool isLeftHand = false;
+        [SerializeField] AnimatorOverrideController animatorOverride = null;
 
         [SerializeField] float weaponDamage = 10;
         public float WeaponDamage { get { return weaponDamage; } }

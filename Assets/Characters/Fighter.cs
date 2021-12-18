@@ -2,14 +2,15 @@ using UnityEngine;
 using RPG.Movement;
 using RPG.Core;
 using RPG.Saving;
+using RPG.Attributes;
 
 namespace RPG.Combat
 {
     public class Fighter : MonoBehaviour, IAction, ISavable
     {
-        [SerializeField] Transform rightHandTransform;
-        [SerializeField] Transform leftHandTransform;
-        [SerializeField] Weapon defaultWeapon;
+        [SerializeField] Transform rightHandTransform = null;
+        [SerializeField] Transform leftHandTransform = null;
+        [SerializeField] Weapon defaultWeapon = null;
         [SerializeField] string defaultWeaponName = "Unarmed";
         Weapon currentWeapon;
 

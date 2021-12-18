@@ -2,7 +2,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.AI;
-using RPG.Saving;
 
 namespace RPG.SceneManagement
 {    public class Portal : MonoBehaviour
@@ -10,7 +9,7 @@ namespace RPG.SceneManagement
         enum DestinationId { A, B, C, D, E }
 
         [SerializeField] int sceneIndex = -1;
-        [SerializeField] Transform spawnPoint;
+        [SerializeField] Transform spawnPoint = null;
         [SerializeField] DestinationId portalId;
         [SerializeField] float fadeOutTime = 1;
         [SerializeField] float fadeInTime = 2;

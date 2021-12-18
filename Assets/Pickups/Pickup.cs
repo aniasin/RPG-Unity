@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -6,7 +5,7 @@ namespace RPG.Combat
 {
     public class Pickup : MonoBehaviour
     {
-        [SerializeField] Weapon weapon;
+        [SerializeField] Weapon weapon = null;
         [SerializeField] float timeToRespawn = 5;
 
         void OnTriggerEnter(Collider collider)

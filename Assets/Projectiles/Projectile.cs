@@ -1,4 +1,4 @@
-using RPG.Core;
+using RPG.Attributes;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -7,8 +7,8 @@ namespace RPG.Combat
     public class Projectile : MonoBehaviour
     {
         [SerializeField] float speed = 50;
-        [SerializeField] bool isHomeSeeking;
-        [SerializeField] GameObject hitEffect;
+        [SerializeField] bool isHomeSeeking = false;
+        [SerializeField] GameObject hitEffect = null;
 
         float damage;
         public float Damage { get { return damage; } set { damage = value; } }
