@@ -1,32 +1,51 @@
-using UnityEditor;
+using System.Collections.Generic;
 using UnityEngine;
 
-namespace RPG.Stats
+namespace RPG.Statistics
 {
     [CreateAssetMenu(fileName = "Progression", menuName = "Stats/Make New Progression", order = 0)]
     public class Progression : StyledScriptableObject
     {
         [SerializeField] ProgressionCharacterClass[] characterClasses;
-        internal float GetHealth(CharacterClass characterClass, int characterLevel)
-        {            
-            foreach (ProgressionCharacterClass progressionCharacterClass in characterClasses)
+
+        Dictionary<CharacterClass, Dictionary<Stats, float[]>> lookUpTable = null;
+
+        void BuildLookUp()
+        {
+            if (lookUpTable != null) return;
+            lookUpTable = new Dictionary<CharacterClass, Dictionary<Stats, float[]>>();
+            
+            foreach (ProgressionCharacterClass progressionClass in characterClasses)
             {
-                if (progressionCharacterClass.characterClass == characterClass)
-                {
-                    return progressionCharacterClass.health[characterLevel];
+                Dictionary<Stats, float[]> statsDict = new Dictionary<Stats, float[]>();
+                foreach (ProgressionStat progressionStat in progressionClass.stats)                {
+                    
+                    statsDict[progressionStat.stat] = progressionStat.values;
+                    lookUpTable[progressionClass.characterClass] = statsDict;
                 }
             }
-            return 0;
         }
 
-        
+        internal float GetStat(Stats stat, CharacterClass characterClass, int characterLevel)
+        {
+            BuildLookUp();
+            float[] values = lookUpTable[characterClass][stat];
+            if (values.Length < characterLevel) return 0;
+            return values[characterLevel];
+        }        
 
        [System.Serializable]
         class ProgressionCharacterClass
         {
             public CharacterClass characterClass;
             [Range(1,99)] public int characterLevel;
-            public float[] health;
+            public ProgressionStat[] stats;
+        }
+        [System.Serializable]
+        public class ProgressionStat
+        {
+            public Stats stat;
+            public float[] values;
         }
     }
 }

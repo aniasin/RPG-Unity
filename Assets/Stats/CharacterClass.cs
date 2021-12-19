@@ -1,5 +1,5 @@
 ﻿
-namespace RPG.Stats
+namespace RPG.Statistics
 {
     public enum CharacterClass
     {

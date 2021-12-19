@@ -14,6 +14,8 @@ namespace RPG.Combat
         public float Damage { get { return damage; } set { damage = value; } }
         Health targetHealth;
         public Health TargetHealth { get { return targetHealth; } set { targetHealth = value; } }
+        GameObject instigator;
+        public GameObject Instigator { get { return instigator; } set { instigator = value; } }
 
         bool hasAimPosition;
 
@@ -52,7 +54,7 @@ namespace RPG.Combat
         {
             if (other.gameObject.GetComponent<Health>() == targetHealth)
             {
-                targetHealth.TakeDamage(damage);
+                targetHealth.TakeDamage(damage, instigator);
             }
             if (hitEffect)
             {

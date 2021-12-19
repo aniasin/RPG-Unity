@@ -87,13 +87,13 @@ namespace RPG.Combat
         void Hit()
         {
             if (!target) return;
-            target.TakeDamage(currentWeapon.WeaponDamage);
+            target.TakeDamage(currentWeapon.WeaponDamage, gameObject);
         }
 
         void Shoot()
         {
             if (!target) return;
-            currentWeapon.SpawnProjectile(target, rightHandTransform, leftHandTransform);
+            currentWeapon.SpawnProjectile(target, rightHandTransform, leftHandTransform, gameObject);
         }
 
         public void RestoreState(object state)

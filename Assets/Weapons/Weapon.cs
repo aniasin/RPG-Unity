@@ -40,12 +40,13 @@ namespace RPG.Combat
             }
         }
 
-        public void SpawnProjectile(Health targetHealth, Transform rightHand, Transform leftHand)
+        public void SpawnProjectile(Health targetHealth, Transform rightHand, Transform leftHand, GameObject instigator)
         {
             Transform handTransform = isLeftHand ? rightHand : leftHand;
             Projectile currentProjectile = Instantiate(projectile, handTransform.position, Quaternion.identity);
             currentProjectile.TargetHealth = targetHealth;
             currentProjectile.Damage = weaponDamage;
+            currentProjectile.Instigator = instigator;
         }
 
         void Unequip(Transform rightHand, Transform leftHand)
