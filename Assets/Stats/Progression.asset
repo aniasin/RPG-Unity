@@ -30,6 +30,12 @@ MonoBehaviour:
       - 10
       - 20
       - 40
+    - stat: 2
+      values:
+      - 0
+      - 1
+      - 2
+      - 3
   - characterClass: 1
     characterLevel: 0
     stats:

@@ -26,15 +26,23 @@ namespace RPG.Statistics
             }
         }
 
-        internal float GetStat(Stats stat, CharacterClass characterClass, int characterLevel)
+        public float GetStat(Stats stat, CharacterClass characterClass, int characterLevel)
         {
             BuildLookUp();
             float[] values = lookUpTable[characterClass][stat];
             if (values.Length < characterLevel) return 0;
             return values[characterLevel];
-        }        
+        }
 
-       [System.Serializable]
+        public int GetLevels(Stats stat, CharacterClass characterClass)
+        {
+            BuildLookUp();
+
+            float[] levels = lookUpTable[characterClass][stat];
+            return levels.Length;
+        }
+
+        [System.Serializable]
         class ProgressionCharacterClass
         {
             public CharacterClass characterClass;
