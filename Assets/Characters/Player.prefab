@@ -100,6 +100,10 @@ PrefabInstance:
       value: player
       objectReference: {fileID: 0}
     - target: {fileID: 7300079368806734210, guid: e2003dd9c4e4bbd4db6096cd600aab6e, type: 3}
+      propertyPath: levelUpFx
+      value: 
+      objectReference: {fileID: 1770094935522392, guid: 7098bdbdcde165049872f566c6a00e5f, type: 3}
+    - target: {fileID: 7300079368806734210, guid: e2003dd9c4e4bbd4db6096cd600aab6e, type: 3}
       propertyPath: characterClass
       value: 0
       objectReference: {fileID: 0}

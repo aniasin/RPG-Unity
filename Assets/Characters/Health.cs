@@ -1,4 +1,5 @@
 using RPG.Core;
+using System;
 using RPG.Saving;
 using RPG.Statistics;
 using UnityEngine;
@@ -7,11 +8,13 @@ namespace RPG.Attributes
 {
     public class Health : MonoBehaviour, ISavable
     {
-        [SerializeField] float healthPoints = 100;
+        float healthPoints = 100;
 
         BaseStats baseStats;
-
         Animator animator;
+
+        public event Action onHealthChanged;
+
 
         bool isDead;
         public bool IsDead { get { return isDead; } }
@@ -24,6 +27,15 @@ namespace RPG.Attributes
 
         void Start()
         {
+            if (IsDead)
+            {
+                healthPoints = 0;
+                return;
+            }
+            if (gameObject.tag == "Player")
+            {
+                baseStats.onLevelUp += RestoreFullHealth;
+            }
             healthPoints = GetComponent<BaseStats>().GetStat(Stats.HEALTH);
         }
 
@@ -34,6 +46,10 @@ namespace RPG.Attributes
             if (!isDead && healthPoints <= 0)
             {
                 Die(instigator);
+            }
+            if (gameObject.tag == "Player")
+            {
+                onHealthChanged();
             }
         }
 
@@ -50,6 +66,15 @@ namespace RPG.Attributes
             gameObject.BroadcastMessage("Death");
             if (!instigator) return;
             AwardExperience(instigator);
+        }
+
+        void RestoreFullHealth()
+        {
+            healthPoints = GetComponent<BaseStats>().GetStat(Stats.HEALTH);
+            if (gameObject.tag == "Player")
+            {
+                onHealthChanged();
+            }
         }
 
         void AwardExperience(GameObject instigator)

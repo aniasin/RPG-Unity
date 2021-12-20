@@ -19,7 +19,6 @@ namespace RPG.Control
         Vector3 startingPosition;
         int currentPatrolIndex;
 
-        bool isActivated;
         GameObject target;
         Fighter fighter;
         Mover mover;
@@ -32,14 +31,8 @@ namespace RPG.Control
             startingPosition = transform.position;
         }
 
-        void Start()
-        {
-            StartCoroutine(ActivateAi());
-        }
-
         void Update()
         {
-            if (!isActivated) return;
             UpdateTimers();
             if (InAttackRange())
             {
@@ -53,12 +46,6 @@ namespace RPG.Control
             {
                 BackToRoutine();
             }
-        }
-
-        IEnumerator ActivateAi()
-        {
-            yield return new WaitForSeconds(1);
-            isActivated = true;
         }
 
         void UpdateTimers()

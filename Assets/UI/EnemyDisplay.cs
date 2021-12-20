@@ -11,9 +11,8 @@ namespace RPG.Combat
         Fighter fighterComp;
 
 
-        void Awake()
+        void Start()
         {
-
             fighterComp = GameObject.FindGameObjectWithTag("Player").GetComponent<Fighter>();
         }
 

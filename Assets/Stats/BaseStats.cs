@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace RPG.Statistics
@@ -8,20 +9,47 @@ namespace RPG.Statistics
         public int Level { get { return startingLevel; } }
         [SerializeField] int experiencePoints;
         [SerializeField] CharacterClass characterClass;
+        [SerializeField] GameObject levelUpFx;
         public CharacterClass CharClass { get { return characterClass; } }
         [SerializeField] Progression progression;
 
-        private void Update()
+        public event Action onLevelUp; 
+
+        int currentLevel = 0;
+
+        void Start()
         {
-            print("CURRENT LEVEL: " + GetLevel());
+            currentLevel = CalculateLevel();
+            Experience experience = GetComponent<Experience>();
+            if (experience != null)
+            {
+                experience.OnXpAwarded += XpAwarded;
+            }
+        }
+
+        void XpAwarded()
+        {
+            int newLevel = CalculateLevel();
+            if (newLevel > currentLevel)
+            {
+                currentLevel = newLevel;
+                onLevelUp();
+                SpawnLevelUpFx();
+            }
         }
 
         public float GetStat(Stats stat)
         {
-            return progression.GetStat(stat, characterClass, startingLevel);
+            return progression.GetStat(stat, characterClass, GetLevel());
         }
 
         public int GetLevel()
+        {
+            if (currentLevel < 1) currentLevel = CalculateLevel();
+            return currentLevel;
+        }
+
+        public int CalculateLevel()
         {
             Experience experience = GetComponent<Experience>();
             if (experience == null) return startingLevel;
@@ -37,6 +65,15 @@ namespace RPG.Statistics
                 }
             }
             return penultimateLevel + 1;
+        }
+
+        void SpawnLevelUpFx()
+        {
+            if (levelUpFx)
+            {
+                GameObject effect = Instantiate(levelUpFx, transform);
+                Destroy(effect, 5);
+            }
         }
     }
 }

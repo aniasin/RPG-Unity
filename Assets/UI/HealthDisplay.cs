@@ -8,13 +8,13 @@ namespace RPG.Attributes
     {
         Health healthComp;
 
-
-        void Awake()
+        void Start()
         {
             healthComp = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
+            healthComp.onHealthChanged += UpdateHealth;
         }
 
-        void Update()
+        void UpdateHealth()
         {
             GetComponent<Text>().text = String.Format("{0:0}%", healthComp.GetHealthPercentage());
         }

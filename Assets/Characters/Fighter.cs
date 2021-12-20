@@ -17,6 +17,7 @@ namespace RPG.Combat
         float timeSinceLastAttack;
         Health target;
         public Health Target { get { return target; } set { target = value; } }
+
         Animator animator;
 
         void Awake()
@@ -35,13 +36,14 @@ namespace RPG.Combat
         void Update()
         {
             timeSinceLastAttack += Time.deltaTime;
-            if (!target || target.IsDead)  return;
-           GetComponent<Mover>().MoveTo(target.transform.position, true);
-           if (Vector3.Distance(target.transform.position, transform.position) <= currentWeapon.WeaponRange)
-           {
+            if (!target || target.IsDead)   return;
+
+            GetComponent<Mover>().MoveTo(target.transform.position, true);
+            if (Vector3.Distance(target.transform.position, transform.position) <= currentWeapon.WeaponRange)
+            {
                 GetComponent<Mover>().Cancel();
-                AttackBehavior();                
-           }
+                AttackBehavior();
+            }
         }
         public void EquipWeapon(Weapon weapon)
         {
