@@ -12,11 +12,12 @@ namespace RPG.Attributes
         {
             healthComp = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
             healthComp.onHealthChanged += UpdateHealth;
+            UpdateHealth();
         }
 
         void UpdateHealth()
         {
-            GetComponent<Text>().text = String.Format("{0:0}%", healthComp.GetHealthPercentage());
+            GetComponent<Text>().text = healthComp.GetHealthPoints();
         }
 
     }

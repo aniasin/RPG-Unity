@@ -5,7 +5,8 @@ namespace RPG.Statistics
     {
         HEALTH,
         EXPERIENCE,
-        EXPERIENCETOLEVELUP
+        EXPERIENCETOLEVELUP,
+        DAMAGE,
     }
 }
 

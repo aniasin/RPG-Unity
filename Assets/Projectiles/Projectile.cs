@@ -19,7 +19,7 @@ namespace RPG.Combat
 
         bool hasAimPosition;
 
-        private void Start()
+        void Start()
         {
             Destroy(gameObject, 10);
         }

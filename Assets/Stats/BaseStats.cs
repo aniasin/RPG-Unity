@@ -1,4 +1,6 @@
+using RPG.Utils;
 using System;
+using System.Collections;
 using UnityEngine;
 
 namespace RPG.Statistics
@@ -13,26 +15,45 @@ namespace RPG.Statistics
         public CharacterClass CharClass { get { return characterClass; } }
         [SerializeField] Progression progression;
 
+        Experience experience;
+
         public event Action onLevelUp; 
 
-        int currentLevel = 0;
+        LazyValue<int> currentLevel;
+
+        void Awake()
+        {
+            experience = GetComponent<Experience>();
+            currentLevel = new LazyValue<int>(CalculateLevel);
+        }
 
         void Start()
         {
-            currentLevel = CalculateLevel();
-            Experience experience = GetComponent<Experience>();
+            currentLevel.ForceInit();
+        }
+
+        void OnEnable()
+        {
             if (experience != null)
             {
                 experience.OnXpAwarded += XpAwarded;
             }
         }
 
+        void OnDisable()
+        {
+            if (experience != null)
+            {
+                experience.OnXpAwarded -= XpAwarded;
+            }
+        }
+
         void XpAwarded()
         {
             int newLevel = CalculateLevel();
-            if (newLevel > currentLevel)
+            if (newLevel > currentLevel.value)
             {
-                currentLevel = newLevel;
+                currentLevel.value = newLevel;
                 onLevelUp();
                 SpawnLevelUpFx();
             }
@@ -40,16 +61,24 @@ namespace RPG.Statistics
 
         public float GetStat(Stats stat)
         {
-            return progression.GetStat(stat, characterClass, GetLevel());
+            float baseStat = progression.GetStat(stat, characterClass, GetLevel());
+            float addedStat = GetAdditiveModifiers(stat);
+            float multiplierStat = GetMultiplierModifiers(stat); // Will return at least 1
+            return (baseStat + addedStat) * multiplierStat;
         }
 
         public int GetLevel()
         {
-            if (currentLevel < 1) currentLevel = CalculateLevel();
-            return currentLevel;
+            return currentLevel.value;
         }
 
-        public int CalculateLevel()
+        public float GetDamage()
+        {
+            float damage = GetStat(Stats.DAMAGE);
+            return damage;
+        }
+
+        int CalculateLevel()
         {
             Experience experience = GetComponent<Experience>();
             if (experience == null) return startingLevel;
@@ -65,6 +94,33 @@ namespace RPG.Statistics
                 }
             }
             return penultimateLevel + 1;
+        }
+
+        float GetAdditiveModifiers(Stats stat)
+        {
+            float cumulatedModifiers = 0;
+            foreach(IModifierProvider modifier in GetComponents<IModifierProvider>())
+            {
+                foreach(float mod in modifier.GetAdittiveModifiers(stat))
+                {
+                    cumulatedModifiers += mod;
+                }                
+            }
+            return cumulatedModifiers;
+        }
+
+         float GetMultiplierModifiers(Stats stat)
+        {
+            float cumulatedMultipliers = 1;
+            foreach (IModifierProvider modifier in GetComponents<IModifierProvider>())
+            {
+                foreach (float mod in modifier.GetMultiplierModifiers(stat))
+                {
+                    if (mod <= 0) continue;
+                    cumulatedMultipliers += mod / 100;
+                }
+            }
+            return cumulatedMultipliers;
         }
 
         void SpawnLevelUpFx()

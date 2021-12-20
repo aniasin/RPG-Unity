@@ -1,5 +1,6 @@
 
 using RPG.Attributes;
+using RPG.Statistics;
 using UnityEngine;
 
 namespace RPG.Combat
@@ -14,8 +15,13 @@ namespace RPG.Combat
 
         [SerializeField] float weaponDamage = 10;
         public float WeaponDamage { get { return weaponDamage; } }
+
+        [SerializeField] float weaponMultiplier = 10;
+        public float WeaponMultiplier { get { return weaponMultiplier; } }
+
         [SerializeField] float weaponSpeed = 1;
         public float WeaponSpeed { get { return weaponSpeed; } }
+
         [SerializeField] float weaponRange = 2;
         public float WeaponRange { get { return weaponRange; } }
 
@@ -40,12 +46,13 @@ namespace RPG.Combat
             }
         }
 
-        public void SpawnProjectile(Health targetHealth, Transform rightHand, Transform leftHand, GameObject instigator)
+        public void SpawnProjectile(Health targetHealth, Transform rightHand, Transform leftHand, 
+                                    GameObject instigator, float damage)
         {
             Transform handTransform = isLeftHand ? rightHand : leftHand;
             Projectile currentProjectile = Instantiate(projectile, handTransform.position, Quaternion.identity);
             currentProjectile.TargetHealth = targetHealth;
-            currentProjectile.Damage = weaponDamage;
+            currentProjectile.Damage = damage;
             currentProjectile.Instigator = instigator;
         }
 

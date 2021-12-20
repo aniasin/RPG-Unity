@@ -54,9 +54,7 @@ namespace RPG.Movement
         public void RestoreState(object state)
         {
             SerializableVector3 position = (SerializableVector3)state;
-            GetComponent<NavMeshAgent>().enabled = false;
-            transform.position = position.GetVector3();
-            GetComponent<NavMeshAgent>().enabled = true;
+            GetComponent<NavMeshAgent>().Warp(position.GetVector3());
             GetComponent<ActionScheduler>().CancelCurrentAction();
         }
 

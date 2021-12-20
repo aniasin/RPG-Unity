@@ -262,7 +262,7 @@ GameObject:
   - component: {fileID: 2399861537978515875}
   - component: {fileID: 7109559543677290388}
   m_Layer: 2
-  m_Name: XpLabel (1)
+  m_Name: LevelLabel (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -710,10 +710,9 @@ GameObject:
   - component: {fileID: 9063425118960519723}
   - component: {fileID: 82420104932287168}
   - component: {fileID: 6294888492835510441}
-  - component: {fileID: 2567554723989356349}
   - component: {fileID: 5311560070931691628}
   m_Layer: 2
-  m_Name: XpValue (1)
+  m_Name: LevelValue (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -780,18 +779,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 0000
---- !u!114 &2567554723989356349
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8640757113130020247}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4ffd7b45334eb6459b7060c158defc8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5311560070931691628
 MonoBehaviour:
   m_ObjectHideFlags: 0

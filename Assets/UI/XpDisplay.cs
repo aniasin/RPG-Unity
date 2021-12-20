@@ -9,7 +9,7 @@ namespace RPG.Statistics
         Experience xpComp;
 
 
-        void Awake()
+        void Start()
         {
             xpComp = GameObject.FindGameObjectWithTag("Player").GetComponent<Experience>();
         }

@@ -4,6 +4,7 @@ using UnityEngine;
 using RPG.Movement;
 using RPG.Combat;
 using UnityEngine.AI;
+using RPG.Utils;
 
 namespace RPG.Control
 {
@@ -16,7 +17,7 @@ namespace RPG.Control
 
         float timeSinceLastChase = Mathf.Infinity;
         float waypointDwellTime = 0;
-        Vector3 startingPosition;
+        LazyValue<Vector3> startingPosition;
         int currentPatrolIndex;
 
         GameObject target;
@@ -28,7 +29,12 @@ namespace RPG.Control
         {
             fighter = GetComponent<Fighter>();
             mover = GetComponent<Mover>();
-            startingPosition = transform.position;
+            startingPosition = new LazyValue<Vector3>(GetStartingPosition);
+        }
+
+        void Start()
+        {
+            startingPosition.ForceInit();
         }
 
         void Update()
@@ -46,6 +52,11 @@ namespace RPG.Control
             {
                 BackToRoutine();
             }
+        }
+
+        Vector3 GetStartingPosition()
+        {
+            return transform.position;
         }
 
         void UpdateTimers()
@@ -80,7 +91,7 @@ namespace RPG.Control
             }
             else
             {
-                mover.StartMoveAction(startingPosition, false);
+                mover.StartMoveAction(startingPosition.value, false);
             }
         }
 

@@ -24,7 +24,7 @@ namespace RPG.Combat
                 GetComponent<Text>().text = "N/A";
                 return;
             }
-            GetComponent<Text>().text = String.Format("{0:0}%", healthComp.GetHealthPercentage());
+            GetComponent<Text>().text = healthComp.GetHealthPoints();
         }
 
     }

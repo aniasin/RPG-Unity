@@ -3,12 +3,13 @@ using System;
 using RPG.Saving;
 using RPG.Statistics;
 using UnityEngine;
+using RPG.Utils;
 
 namespace RPG.Attributes
 {
     public class Health : MonoBehaviour, ISavable
     {
-        float healthPoints = 100;
+        LazyValue<float> healthPoints;
 
         BaseStats baseStats;
         Animator animator;
@@ -23,27 +24,33 @@ namespace RPG.Attributes
         {
             baseStats = GetComponent<BaseStats>();
             animator = GetComponent<Animator>();
+            healthPoints = new LazyValue<float>(GetInitialHealth);
+        }
+
+        float GetInitialHealth()
+        {
+            return GetComponent<BaseStats>().GetStat(Stats.HEALTH);
         }
 
         void Start()
         {
+            healthPoints.ForceInit();
             if (IsDead)
             {
-                healthPoints = 0;
+                healthPoints.value = 0;
                 return;
             }
             if (gameObject.tag == "Player")
             {
                 baseStats.onLevelUp += RestoreFullHealth;
             }
-            healthPoints = GetComponent<BaseStats>().GetStat(Stats.HEALTH);
         }
 
 
         public void TakeDamage(float damage, GameObject instigator)
         {
-            healthPoints = Mathf.Max(healthPoints - damage, 0);
-            if (!isDead && healthPoints <= 0)
+            healthPoints.value = Mathf.Max(healthPoints.value - damage, 0);
+            if (!isDead && healthPoints.value <= 0)
             {
                 Die(instigator);
             }
@@ -51,12 +58,13 @@ namespace RPG.Attributes
             {
                 onHealthChanged();
             }
+            print(gameObject.name + " took damage: " + damage);
         }
 
-        public float GetHealthPercentage()
+        public string GetHealthPoints()
         {
-            if (healthPoints <= 0) return 0;
-            return (healthPoints / GetComponent<BaseStats>().GetStat(Stats.HEALTH)) * 100;
+            string value = String.Format("{0:0}/{1:0}", healthPoints.value, GetComponent<BaseStats>().GetStat(Stats.HEALTH));
+            return value;
         }
         void Die(GameObject instigator)
         {
@@ -70,7 +78,7 @@ namespace RPG.Attributes
 
         void RestoreFullHealth()
         {
-            healthPoints = GetComponent<BaseStats>().GetStat(Stats.HEALTH);
+            healthPoints.value = GetComponent<BaseStats>().GetStat(Stats.HEALTH);
             if (gameObject.tag == "Player")
             {
                 onHealthChanged();
@@ -89,13 +97,13 @@ namespace RPG.Attributes
 
         public void RestoreState(object state)
         {
-            healthPoints = (float)state;
-            if (healthPoints <= 0) Die(null);
+            healthPoints.value = (float)state;
+            if (healthPoints.value <= 0) Die(null);
         }
 
         public object CaptureState()
         {
-            return healthPoints;
+            return healthPoints.value;
         }
     }
 }
