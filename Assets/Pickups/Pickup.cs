@@ -1,19 +1,17 @@
+using RPG.Control;
 using System.Collections;
 using UnityEngine;
 
 namespace RPG.Combat
 {
-    public class Pickup : MonoBehaviour
+    public class Pickup : MonoBehaviour, IRaycastable
     {
         [SerializeField] Weapon weapon = null;
         [SerializeField] float timeToRespawn = 5;
 
-        void OnTriggerEnter(Collider collider)
+        void PickUp(Fighter fighterComp)
         {
-            if (collider.gameObject.tag != "Player") return;
-            Fighter fighterComp = collider.GetComponent<Fighter>();
             fighterComp.EquipWeapon(weapon);
-            
             StartCoroutine(respawn(timeToRespawn));
         }
 
@@ -28,6 +26,19 @@ namespace RPG.Combat
         {
             GetComponent<Collider>().enabled = shouldShow;
             GetComponentInChildren<MeshRenderer>().enabled = shouldShow;
+        }
+        public bool HandleRaycast(PlayerControl playerControl)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                PickUp(playerControl.GetComponent<Fighter>());
+            }
+            return true;
+        }
+
+        public CursorType GetCursorType()
+        {
+            return CursorType.PICKUP;
         }
     }
 }
