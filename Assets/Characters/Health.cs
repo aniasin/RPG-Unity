@@ -4,11 +4,16 @@ using RPG.Saving;
 using RPG.Statistics;
 using UnityEngine;
 using RPG.Utils;
+using UnityEngine.Events;
 
 namespace RPG.Attributes
 {
     public class Health : MonoBehaviour, ISavable
     {
+        [SerializeField] TakeDamageEvent takeDamage;
+        [System.Serializable]
+        public class TakeDamageEvent : UnityEvent<float> {}
+
         LazyValue<float> healthPoints;
 
         BaseStats baseStats;
@@ -53,12 +58,13 @@ namespace RPG.Attributes
             if (!isDead && healthPoints.value <= 0)
             {
                 Die(instigator);
+                return;
             }
             if (gameObject.tag == "Player")
             {
                 onHealthChanged();
             }
-            print(gameObject.name + " took damage: " + damage);
+            takeDamage.Invoke(damage);
         }
 
         public string GetHealthPoints()
