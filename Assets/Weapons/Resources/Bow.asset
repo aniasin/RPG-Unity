@@ -17,5 +17,6 @@ MonoBehaviour:
   isLeftHand: 1
   animatorOverride: {fileID: 22100000, guid: 7d6c7e47b0747be41aedb4420542d70f, type: 2}
   weaponDamage: 20
+  weaponMultiplier: 10
   weaponSpeed: 2
   weaponRange: 20

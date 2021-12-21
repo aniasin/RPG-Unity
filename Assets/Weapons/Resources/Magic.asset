@@ -16,6 +16,7 @@ MonoBehaviour:
   projectile: {fileID: 5572322127583478127, guid: d6ed70ca07528e040853e68a0741ceac, type: 3}
   isLeftHand: 0
   animatorOverride: {fileID: 22100000, guid: 555a0d0dcf0d49641b033cf36ebddeb0, type: 2}
-  weaponDamage: 25
+  weaponDamage: 30
+  weaponMultiplier: 10
   weaponSpeed: 3
   weaponRange: 25
