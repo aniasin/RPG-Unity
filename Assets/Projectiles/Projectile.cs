@@ -1,6 +1,7 @@
 using RPG.Attributes;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 namespace RPG.Combat
 {
@@ -9,6 +10,8 @@ namespace RPG.Combat
         [SerializeField] float speed = 50;
         [SerializeField] bool isHomeSeeking = false;
         [SerializeField] GameObject hitEffect = null;
+        [SerializeField] UnityEvent launchSound = null;
+        [SerializeField] UnityEvent hitSound = null;
 
         float damage;
         public float Damage { get { return damage; } set { damage = value; } }
@@ -21,6 +24,7 @@ namespace RPG.Combat
 
         void Start()
         {
+            launchSound.Invoke();
             Destroy(gameObject, 10);
         }
 
@@ -61,6 +65,7 @@ namespace RPG.Combat
                 GameObject impact =Instantiate(hitEffect, other.transform.position, other.transform.rotation);
                 Destroy(impact, 5);
             }
+            hitSound.Invoke();
             Destroy(gameObject);
         }
 

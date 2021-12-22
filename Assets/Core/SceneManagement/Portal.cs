@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.AI;
+using RPG.Control;
 
 namespace RPG.SceneManagement
 {    public class Portal : MonoBehaviour
@@ -40,20 +41,23 @@ namespace RPG.SceneManagement
 
         IEnumerator SceneTransition(int sceneIndex)
         {
+            DisableControl();
             DontDestroyOnLoad(gameObject);
 
             Fader fader = FindObjectOfType<Fader>();
-            yield return fader.FadeOut(fadeOutTime);
+            fader.FadeOut(fadeOutTime);
             SaveScene();
 
             yield return SceneManager.LoadSceneAsync(sceneIndex);
+            DisableControl();
 
             LoadScene();
             UpdatePlayer(FindOtherPortal());
             SaveScene();
 
             yield return new WaitForSeconds(fadeWaitTime);
-            yield return fader.FadeIn(fadeInTime);
+            fader.FadeIn(fadeInTime);
+            EnableControl();
             Destroy(this.gameObject);
         }
 
@@ -80,6 +84,18 @@ namespace RPG.SceneManagement
         void LoadScene()
         {
             savingWrapper.Load();
+        }
+        void DisableControl()
+        {
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            player.GetComponent<NavMeshAgent>().enabled = false;
+            player.GetComponent<PlayerControl>().enabled = false;
+        }
+        void EnableControl()
+        {
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            player.GetComponent<NavMeshAgent>().enabled = true;
+            player.GetComponent<PlayerControl>().enabled = true;
         }
     }  
 }

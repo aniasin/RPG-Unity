@@ -107,9 +107,29 @@ PrefabInstance:
       propertyPath: characterClass
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7980681069801949374, guid: e2003dd9c4e4bbd4db6096cd600aab6e, type: 3}
+      propertyPath: textColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7980681069801949374, guid: e2003dd9c4e4bbd4db6096cd600aab6e, type: 3}
+      propertyPath: textColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7980681069801949374, guid: e2003dd9c4e4bbd4db6096cd600aab6e, type: 3}
+      propertyPath: textColor.g
+      value: 0.028281838
+      objectReference: {fileID: 0}
+    - target: {fileID: 7980681069801949374, guid: e2003dd9c4e4bbd4db6096cd600aab6e, type: 3}
+      propertyPath: textColor.r
+      value: 0.9529412
+      objectReference: {fileID: 0}
     - target: {fileID: 8444859858520994926, guid: e2003dd9c4e4bbd4db6096cd600aab6e, type: 3}
       propertyPath: runSpeed
       value: 5.66
+      objectReference: {fileID: 0}
+    - target: {fileID: 8578453109380072692, guid: e2003dd9c4e4bbd4db6096cd600aab6e, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e2003dd9c4e4bbd4db6096cd600aab6e, type: 3}

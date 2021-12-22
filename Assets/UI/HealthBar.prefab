@@ -231,6 +231,7 @@ GameObject:
   - component: {fileID: 4638967677495766503}
   - component: {fileID: 7925375292877855874}
   - component: {fileID: 7270939195616072066}
+  - component: {fileID: 6350158525559457968}
   m_Layer: 0
   m_Name: ForeGround
   m_TagString: Untagged
@@ -295,3 +296,16 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6350158525559457968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8625774215886246186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf9d00bb3b406bb42853bb3b4441141e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rootCanvas: {fileID: 3569319626440169993}

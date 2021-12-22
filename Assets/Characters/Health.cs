@@ -11,8 +11,12 @@ namespace RPG.Attributes
     public class Health : MonoBehaviour, ISavable
     {
         [SerializeField] TakeDamageEvent takeDamage;
+        [SerializeField] UpdateHealthBar updateHealthBar;
+        [SerializeField] UnityEvent onDie;
         [System.Serializable]
         public class TakeDamageEvent : UnityEvent<float> {}
+        [System.Serializable]
+        public class UpdateHealthBar : UnityEvent<float> { }
 
         LazyValue<float> healthPoints;
 
@@ -40,6 +44,7 @@ namespace RPG.Attributes
         void Start()
         {
             healthPoints.ForceInit();
+            updateHealthBar.Invoke(GetHeathPercentage());
             if (IsDead)
             {
                 healthPoints.value = 0;
@@ -65,6 +70,7 @@ namespace RPG.Attributes
                 onHealthChanged();
             }
             takeDamage.Invoke(damage);
+            updateHealthBar.Invoke(GetHeathPercentage());
         }
 
         public string GetHealthPoints()
@@ -72,8 +78,17 @@ namespace RPG.Attributes
             string value = String.Format("{0:0}/{1:0}", healthPoints.value, GetComponent<BaseStats>().GetStat(Stats.HEALTH));
             return value;
         }
+
+        float GetHeathPercentage()
+        {
+            if (healthPoints.value <= 0) return 0;
+            float NormalizedValue = Mathf.Clamp01(healthPoints.value / GetComponent<BaseStats>().GetStat(Stats.HEALTH));
+            return NormalizedValue;
+        }
         void Die(GameObject instigator)
         {
+            onDie.Invoke();
+            updateHealthBar.Invoke(0);
             isDead = true;
             animator.SetTrigger("death");
             GetComponent<ActionScheduler>().CancelCurrentAction();
