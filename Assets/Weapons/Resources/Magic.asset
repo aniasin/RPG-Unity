@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0b8cc900987be540ae8339154dc149c, type: 3}
   m_Name: Magic
   m_EditorClassIdentifier: 
-  weaponPrefab: {fileID: 1348515257957480890, guid: ec60aa195b3d2e744a7472c8cd45a231, type: 3}
+  weapon: {fileID: 3193066525273802676, guid: 6b92b349d446cec4e996c67e43532d3e, type: 3}
   projectile: {fileID: 5572322127583478127, guid: d6ed70ca07528e040853e68a0741ceac, type: 3}
   isLeftHand: 0
   animatorOverride: {fileID: 22100000, guid: 555a0d0dcf0d49641b033cf36ebddeb0, type: 2}

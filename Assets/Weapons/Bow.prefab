@@ -66,7 +66,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1348515257957480890, guid: ec60aa195b3d2e744a7472c8cd45a231, type: 3}
       propertyPath: m_Name
-      value: Unarmed Variant 1
+      value: Bow
       objectReference: {fileID: 0}
     - target: {fileID: 7210842085118210667, guid: ec60aa195b3d2e744a7472c8cd45a231, type: 3}
       propertyPath: m_RootOrder
@@ -111,6 +111,10 @@ PrefabInstance:
     - target: {fileID: 7210842085118210667, guid: ec60aa195b3d2e744a7472c8cd45a231, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8519345840913987095, guid: ec60aa195b3d2e744a7472c8cd45a231, type: 3}
+      propertyPath: weaponPrefab
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec60aa195b3d2e744a7472c8cd45a231, type: 3}

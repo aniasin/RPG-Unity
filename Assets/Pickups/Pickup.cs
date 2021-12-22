@@ -6,12 +6,12 @@ namespace RPG.Combat
 {
     public class Pickup : MonoBehaviour, IRaycastable
     {
-        [SerializeField] Weapon weapon = null;
+        [SerializeField] WeaponConfig weaponConfig = null;
         [SerializeField] float timeToRespawn = 5;
 
         void PickUp(Fighter fighterComp)
         {
-            fighterComp.EquipWeapon(weapon);
+            fighterComp.EquipWeapon(weaponConfig);
             StartCoroutine(respawn(timeToRespawn));
         }
 

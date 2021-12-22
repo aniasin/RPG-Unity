@@ -4,7 +4,7 @@ using UnityEngine;
 namespace RPG.Statistics
 {
     [CreateAssetMenu(fileName = "Progression", menuName = "Stats/Make New Progression", order = 0)]
-    public class Progression : StyledScriptableObject
+    public class Progression : ScriptableObject
     {
         [SerializeField] ProgressionCharacterClass[] characterClasses;
 

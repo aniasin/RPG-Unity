@@ -13,10 +13,10 @@ namespace RPG.Combat
     {
         [SerializeField] Transform rightHandTransform = null;
         [SerializeField] Transform leftHandTransform = null;
-        [SerializeField] Weapon defaultWeapon = null;
+        [SerializeField] WeaponConfig defaultWeapon = null;
         [SerializeField] string defaultWeaponName = "Unarmed";
 
-        LazyValue<Weapon> currentWeapon;
+        LazyValue<WeaponConfig> currentWeaponConfig;
 
         float timeSinceLastAttack;
         Health target;
@@ -27,16 +27,16 @@ namespace RPG.Combat
         void Awake()
         {
             animator = GetComponent<Animator>();
-            currentWeapon = new LazyValue<Weapon>(InitializeDefaultWeapon);
+            currentWeaponConfig = new LazyValue<WeaponConfig>(InitializeDefaultWeapon);
         }
 
         void Start()
         {
-            currentWeapon.ForceInit();
-            EquipWeapon(currentWeapon.value);        
+            currentWeaponConfig.ForceInit();
+            EquipWeapon(currentWeaponConfig.value);        
         }
 
-        Weapon InitializeDefaultWeapon()
+        WeaponConfig InitializeDefaultWeapon()
         {
             return defaultWeapon;
         }
@@ -47,16 +47,21 @@ namespace RPG.Combat
             if (!target || target.IsDead)   return;
 
             GetComponent<Mover>().MoveTo(target.transform.position, true);
-            if (Vector3.Distance(target.transform.position, transform.position) <= currentWeapon.value.WeaponRange)
+            if (Vector3.Distance(target.transform.position, transform.position) <= currentWeaponConfig.value.WeaponRange)
             {
                 GetComponent<Mover>().Cancel();
                 AttackBehavior();
             }
         }
-        public void EquipWeapon(Weapon weapon)
+        public void EquipWeapon(WeaponConfig weapon)
         {
+            if (weapon.WeaponDamage < 0)
+            {
+                GetComponent<Health>().RestoreFullHealth();
+                return;
+            }
             weapon.Spawn(rightHandTransform, leftHandTransform, animator);
-            currentWeapon.value = weapon;
+            currentWeaponConfig.value = weapon;
         }
 
         public void Attack(GameObject enemyTarget)
@@ -68,7 +73,7 @@ namespace RPG.Combat
         void AttackBehavior()
         {
             transform.LookAt(target.transform);
-            if (timeSinceLastAttack >= currentWeapon.value.WeaponSpeed)
+            if (timeSinceLastAttack >= currentWeaponConfig.value.WeaponSpeed)
             {                
                 //Triggers Hit() event.
                 timeSinceLastAttack = 0;
@@ -99,32 +104,33 @@ namespace RPG.Combat
             if (!target) return;
             float damage = GetComponent<BaseStats>().GetDamage();
             target.TakeDamage(damage, gameObject);
+            currentWeaponConfig.value.WeaponInstance.OnHit();
         }
 
         void Shoot()
         {
             float damage = GetComponent<BaseStats>().GetDamage();
             if (!target) return;
-            currentWeapon.value.SpawnProjectile(target, rightHandTransform, leftHandTransform, gameObject, damage);
+            currentWeaponConfig.value.SpawnProjectile(target, rightHandTransform, leftHandTransform, gameObject, damage);
         }
 
         public void RestoreState(object state)
         {
             defaultWeaponName = (string)state;
-            Weapon weapon = Resources.Load<Weapon>(defaultWeaponName);
+            WeaponConfig weapon = Resources.Load<WeaponConfig>(defaultWeaponName);
             EquipWeapon(weapon);
         }
 
         public object CaptureState()
         {
-            return currentWeapon.value.name;
+            return currentWeaponConfig.value.name;
         }
 
         public IEnumerable<float> GetAdittiveModifiers(Stats stat)
         {
             if (stat == Stats.DAMAGE)
             {
-                yield return currentWeapon.value.WeaponDamage;
+                yield return currentWeaponConfig.value.WeaponDamage;
             }
         }
 
@@ -132,7 +138,7 @@ namespace RPG.Combat
         {
             if (stat == Stats.DAMAGE)
             {
-                yield return currentWeapon.value.WeaponMultiplier;
+                yield return currentWeaponConfig.value.WeaponMultiplier;
             }
         }
     }

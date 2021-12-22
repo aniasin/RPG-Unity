@@ -97,7 +97,7 @@ namespace RPG.Attributes
             AwardExperience(instigator);
         }
 
-        void RestoreFullHealth()
+        public void RestoreFullHealth()
         {
             healthPoints.value = GetComponent<BaseStats>().GetStat(Stats.HEALTH);
             if (gameObject.tag == "Player")

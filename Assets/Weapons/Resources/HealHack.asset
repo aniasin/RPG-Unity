@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f0b8cc900987be540ae8339154dc149c, type: 3}
-  m_Name: Unarmed
+  m_Name: HealHack
   m_EditorClassIdentifier: 
   weapon: {fileID: 4208937585225790983, guid: ec60aa195b3d2e744a7472c8cd45a231, type: 3}
   projectile: {fileID: 0}
   isLeftHand: 0
   animatorOverride: {fileID: 22100000, guid: 1faba4220af082142bfd68d45c3a10b5, type: 2}
-  weaponDamage: 5
+  weaponDamage: -1
   weaponMultiplier: 10
   weaponSpeed: 0.5
   weaponRange: 2

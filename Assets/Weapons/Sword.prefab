@@ -9,7 +9,23 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1348515257957480890, guid: ec60aa195b3d2e744a7472c8cd45a231, type: 3}
       propertyPath: m_Name
-      value: Unarmed Variant
+      value: Sword
+      objectReference: {fileID: 0}
+    - target: {fileID: 1428448753096905610, guid: ec60aa195b3d2e744a7472c8cd45a231, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: ecb1846d8f5334e4098e073700dc88fb, type: 3}
+    - target: {fileID: 1907698810294946728, guid: ec60aa195b3d2e744a7472c8cd45a231, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4208937585225790983, guid: ec60aa195b3d2e744a7472c8cd45a231, type: 3}
+      propertyPath: hitSound.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3081130312764437901}
+    - target: {fileID: 4208937585225790983, guid: ec60aa195b3d2e744a7472c8cd45a231, type: 3}
+      propertyPath: hitSound.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Play
       objectReference: {fileID: 0}
     - target: {fileID: 7210842085118210667, guid: ec60aa195b3d2e744a7472c8cd45a231, type: 3}
       propertyPath: m_RootOrder
@@ -55,11 +71,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8519345840913987095, guid: ec60aa195b3d2e744a7472c8cd45a231, type: 3}
+      propertyPath: weaponPrefab
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec60aa195b3d2e744a7472c8cd45a231, type: 3}
 --- !u!4 &6702077012139021420 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7210842085118210667, guid: ec60aa195b3d2e744a7472c8cd45a231, type: 3}
+  m_PrefabInstance: {fileID: 4111928449180100103}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &3081130312764437901 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 1428448753096905610, guid: ec60aa195b3d2e744a7472c8cd45a231, type: 3}
   m_PrefabInstance: {fileID: 4111928449180100103}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5990731260762283750
