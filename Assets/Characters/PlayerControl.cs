@@ -12,9 +12,8 @@ namespace RPG.Control
     public class PlayerControl : MonoBehaviour
     {
         [SerializeField] Transform target;
-        [SerializeField] float maxNavProjectDistance = 1f;
-        [SerializeField] float maxWalkableDistance = 30f;
         [SerializeField] CursorMapping[] cursorMappings = null;
+        [SerializeField] float raycastRadius = 1f;
 
         [System.Serializable]
         struct CursorMapping
@@ -47,10 +46,21 @@ namespace RPG.Control
                 return;
             }
 
+            if (BlindAttack()) return;
             if (InteractWithComponent()) return;
             if (InteractWithMovement()) return;
 
             SetCursor(CursorType.NONE);
+        }
+
+        bool BlindAttack()
+        {
+            if (Input.GetKey(KeyCode.LeftShift) && Input.GetMouseButton(0))
+            {
+                fighter.BlindAttack();
+                return true;
+            }
+            return false;
         }
 
         bool InteractWithUi()
@@ -65,14 +75,13 @@ namespace RPG.Control
             RaycastHit[] hitResults = RaycastAllSorted();
             foreach (RaycastHit hit in hitResults)
             {
+                if (!mover.CanMoveTo(hit.transform.position) && !fighter.InRange(hit.transform.position)) continue;
                 IRaycastable[] raycastables = hit.transform.GetComponents<IRaycastable>();
                 foreach (IRaycastable raycastable in raycastables)
                 {
-                    if (raycastable.HandleRaycast(this))
-                    {
-                        SetCursor(raycastable.GetCursorType());
-                        return true;
-                    }
+                    if (!raycastable.HandleRaycast(this)) continue;
+                    SetCursor(raycastable.GetCursorType());
+                    return true;
                 }
             }
             return false;
@@ -80,7 +89,7 @@ namespace RPG.Control
 
         RaycastHit[] RaycastAllSorted()
         {
-            RaycastHit[] hitResults = Physics.RaycastAll(GetMouseRay());
+            RaycastHit[] hitResults = Physics.SphereCastAll(GetMouseRay(), raycastRadius);
             hitResults = hitResults.OrderBy((d) => (d.transform.position - transform.position).sqrMagnitude).ToArray();
             return hitResults;
         }
@@ -90,7 +99,7 @@ namespace RPG.Control
             Vector3 targetPosition;
             bool hasHit = RaycastNavMesh(out targetPosition);
 
-            if (hasHit)
+            if (hasHit && mover.CanMoveTo(targetPosition))
             {
                 if (Input.GetMouseButton(0))
                 {
@@ -108,34 +117,13 @@ namespace RPG.Control
             RaycastHit hitResult;
             if(Physics.Raycast(GetMouseRay(), out hitResult))
             {
-                NavMeshHit hit;
-                bool hasHit = NavMesh.SamplePosition(hitResult.point, out hit, maxNavProjectDistance, 1);
-                if (!hasHit) return false;
-
-                NavMeshPath path = new NavMeshPath();
-                bool hasPath = NavMesh.CalculatePath(transform.position, hit.position, 1, path);
-                if (!hasPath) return false;
-
-                if (path.status != NavMeshPathStatus.PathComplete)return false;
-                if (GetPathLength(path) > maxWalkableDistance) return false;
-
-                target = hit.position;
-                return true;
+                if (mover.CanMoveTo(hitResult.point))
+                {
+                    target = hitResult.point;
+                    return true;
+                }
             }   
              return false;
-        }
-
-        float GetPathLength(NavMeshPath path)
-        {
-            float distance = 0;
-            Vector3 previousCorner = transform.position;
-            foreach (Vector3 corner in path.corners)
-            {
-                distance += Vector3.Distance(previousCorner, corner);
-                previousCorner = corner;
-                if (distance > maxWalkableDistance) return distance;
-            }
-            return distance;
         }
 
         void SetCursor(CursorType type)

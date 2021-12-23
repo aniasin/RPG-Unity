@@ -43,14 +43,7 @@ namespace RPG.Combat
          Vector3 GetAimPosition()
         {
             hasAimPosition = true;
-            float velocityX = 0;
-            float velocityZ = 0;
-            if (!isHomeSeeking)
-            {
-                velocityX = Mathf.Clamp01(targetHealth.GetComponent<NavMeshAgent>().velocity.x);
-                velocityZ = Mathf.Clamp01(targetHealth.GetComponent<NavMeshAgent>().velocity.z);
-            }
-            Vector3 offset = new Vector3(velocityX, 1, velocityZ);
+            Vector3 offset = new Vector3(0, 1, 0);
             return targetHealth.transform.position + offset;
         }
 

@@ -10,6 +10,8 @@ namespace RPG.Combat
         [SerializeField] Weapon weapon = null;
         [SerializeField] Projectile projectile = null;
         [SerializeField] bool isLeftHand = false;
+        [SerializeField] bool isRanged = false;
+        public bool IsRanged { get { return isRanged; } }
         [SerializeField] AnimatorOverrideController animatorOverride = null;
 
         [SerializeField] float weaponDamage = 10;

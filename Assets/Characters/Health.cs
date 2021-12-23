@@ -25,7 +25,6 @@ namespace RPG.Attributes
 
         public event Action onHealthChanged;
 
-
         bool isDead;
         public bool IsDead { get { return isDead; } }
 

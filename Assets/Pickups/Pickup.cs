@@ -40,5 +40,6 @@ namespace RPG.Combat
         {
             return CursorType.PICKUP;
         }
+
     }
 }

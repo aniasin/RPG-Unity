@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using RPG.Movement;
 using RPG.Combat;
@@ -11,6 +9,7 @@ namespace RPG.Control
     public class AIControl : MonoBehaviour
     {
         [SerializeField] float chaseDistance = 5f;
+        [SerializeField] float aggroCoolDownTime = 5f;
         [SerializeField] float suspicionTime = 2f;
         [SerializeField] PatrolPath patrolPath = null;
         [SerializeField] float waypointTollerance = 1f;
@@ -19,6 +18,7 @@ namespace RPG.Control
         float waypointDwellTime = 0;
         LazyValue<Vector3> startingPosition;
         int currentPatrolIndex;
+        float timeSinceAggrevated = Mathf.Infinity;
 
         GameObject target;
         Fighter fighter;
@@ -40,7 +40,7 @@ namespace RPG.Control
         void Update()
         {
             UpdateTimers();
-            if (InAttackRange())
+            if (IsAggrevated())
             {
                 ChaseTarget();
             }
@@ -54,6 +54,23 @@ namespace RPG.Control
             }
         }
 
+        public void Aggrevate()
+        {
+            timeSinceAggrevated = 0;
+            fighter.Attack(GameObject.FindWithTag("Player"));
+        }
+        void AggrevateNearbyEnemies()
+        {
+            RaycastHit[] hits = Physics.SphereCastAll(transform.position, chaseDistance, Vector3.up, 0);
+            foreach (RaycastHit hit in hits)
+            {
+                AIControl ai = hit.collider.GetComponent<AIControl>();
+                if (ai == null) continue;
+
+                ai.Aggrevate();
+            }
+        }
+
         Vector3 GetStartingPosition()
         {
             return transform.position;
@@ -63,19 +80,23 @@ namespace RPG.Control
         {
             timeSinceLastChase += Time.deltaTime;
             waypointDwellTime += Time.deltaTime;
+            timeSinceAggrevated += Time.deltaTime;
         }
 
-        bool InAttackRange()
+        bool IsAggrevated()
         {
-            target = GameObject.FindWithTag("Player");
-            float currentDistance = Vector3.Distance(target.transform.position, transform.position);
-            return currentDistance <= chaseDistance;
+            GameObject player = GameObject.FindWithTag("Player");
+            float distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
+            return distanceToPlayer < chaseDistance || timeSinceAggrevated < aggroCoolDownTime;
         }
 
         void ChaseTarget()
         {
             timeSinceLastChase = 0;
+            GameObject target = GameObject.FindWithTag("Player");
+            timeSinceLastChase = 0;
             fighter.Attack(target);
+            AggrevateNearbyEnemies();
         }
 
     void StopChase()

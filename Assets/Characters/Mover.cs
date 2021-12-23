@@ -9,6 +9,8 @@ namespace RPG.Movement
     {
         [SerializeField] float walkSpeed = 2f;
         [SerializeField] float runSpeed = 5f;
+        [SerializeField] float maxNavProjectDistance = 1f;
+        [SerializeField] float maxWalkableDistance = 30f;
 
         NavMeshAgent navMeshAgent;
         Animator animator;
@@ -29,6 +31,21 @@ namespace RPG.Movement
         {
             GetComponent<ActionScheduler>().StartAction(this);
             MoveTo(destination, running);
+        }
+
+        public bool CanMoveTo(Vector3 targetPosition)
+        {
+            NavMeshHit hit;
+            bool hasHit = NavMesh.SamplePosition(targetPosition, out hit, maxNavProjectDistance, 1);
+            if (!hasHit) return false;
+
+            NavMeshPath path = new NavMeshPath();
+            bool hasPath = NavMesh.CalculatePath(transform.position, hit.position, 1, path);
+            if (!hasPath) return false;
+
+            if (path.status != NavMeshPathStatus.PathComplete) return false;
+            if (GetPathLength(path) > maxWalkableDistance) return false;
+            return true;
         }
 
         public void MoveTo(Vector3 destination, bool running)
@@ -61,6 +78,18 @@ namespace RPG.Movement
         public object CaptureState()
         {
             return new SerializableVector3(transform.position);
+        }
+        float GetPathLength(NavMeshPath path)
+        {
+            float distance = 0;
+            Vector3 previousCorner = transform.position;
+            foreach (Vector3 corner in path.corners)
+            {
+                distance += Vector3.Distance(previousCorner, corner);
+                previousCorner = corner;
+                if (distance > maxWalkableDistance) return distance;
+            }
+            return distance;
         }
     }
 

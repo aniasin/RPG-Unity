@@ -29,7 +29,6 @@ namespace RPG.Combat
             animator = GetComponent<Animator>();
             currentWeaponConfig = new LazyValue<WeaponConfig>(InitializeDefaultWeapon);
         }
-
         void Start()
         {
             currentWeaponConfig.ForceInit();
@@ -47,11 +46,17 @@ namespace RPG.Combat
             if (!target || target.IsDead)   return;
 
             GetComponent<Mover>().MoveTo(target.transform.position, true);
-            if (Vector3.Distance(target.transform.position, transform.position) <= currentWeaponConfig.value.WeaponRange)
+            if (InRange(target.transform.position))
             {
                 GetComponent<Mover>().Cancel();
                 AttackBehavior();
             }
+        }
+
+        public bool InRange(Vector3 target)
+        {
+            return Vector3.Distance(target, transform.position) 
+                <= currentWeaponConfig.value.WeaponRange;
         }
         public void EquipWeapon(WeaponConfig weapon)
         {
@@ -68,6 +73,12 @@ namespace RPG.Combat
         {
             GetComponent<ActionScheduler>().StartAction(this);
             target = enemyTarget.GetComponent<Health>();
+        }
+
+        public void BlindAttack()
+        {
+               //TODO
+//             if (!currentWeaponConfig.value.IsRanged) return;
         }
 
         void AttackBehavior()
