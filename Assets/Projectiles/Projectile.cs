@@ -30,8 +30,6 @@ namespace RPG.Combat
 
         void Update()
         {
-            if (targetHealth == null) return;
-
             if (!hasAimPosition || isHomeSeeking)
             {
                 transform.LookAt(GetAimPosition());
@@ -43,8 +41,7 @@ namespace RPG.Combat
          Vector3 GetAimPosition()
         {
             hasAimPosition = true;
-            Vector3 offset = new Vector3(0, 1, 0);
-            return targetHealth.transform.position + offset;
+            return targetHealth.transform.position + Vector3.up;
         }
 
         void OnTriggerEnter(Collider other)

@@ -75,12 +75,6 @@ namespace RPG.Combat
             target = enemyTarget.GetComponent<Health>();
         }
 
-        public void BlindAttack()
-        {
-               //TODO
-//             if (!currentWeaponConfig.value.IsRanged) return;
-        }
-
         void AttackBehavior()
         {
             transform.LookAt(target.transform);
@@ -121,7 +115,6 @@ namespace RPG.Combat
         void Shoot()
         {
             float damage = GetComponent<BaseStats>().GetDamage();
-            if (!target) return;
             currentWeaponConfig.value.SpawnProjectile(target, rightHandTransform, leftHandTransform, gameObject, damage);
         }
 

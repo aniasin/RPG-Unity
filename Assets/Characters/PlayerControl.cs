@@ -46,21 +46,10 @@ namespace RPG.Control
                 return;
             }
 
-            if (BlindAttack()) return;
             if (InteractWithComponent()) return;
             if (InteractWithMovement()) return;
 
             SetCursor(CursorType.NONE);
-        }
-
-        bool BlindAttack()
-        {
-            if (Input.GetKey(KeyCode.LeftShift) && Input.GetMouseButton(0))
-            {
-                fighter.BlindAttack();
-                return true;
-            }
-            return false;
         }
 
         bool InteractWithUi()
@@ -96,6 +85,7 @@ namespace RPG.Control
 
         bool InteractWithMovement()
         {
+            if (Input.GetKey(KeyCode.LeftShift)) return false;
             Vector3 targetPosition;
             bool hasHit = RaycastNavMesh(out targetPosition);
 
@@ -141,7 +131,7 @@ namespace RPG.Control
             }
             return cursorMappings[0];
         }
-
+  
         private static Ray GetMouseRay()
         {      
             return Camera.main.ScreenPointToRay(Input.mousePosition);
