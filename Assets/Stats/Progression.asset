@@ -19,7 +19,7 @@ MonoBehaviour:
     - stat: 0
       values:
       - 100
-      - 40
+      - 160
       - 200
       - 280
       - 320

@@ -6,6 +6,7 @@ using RPG.Attributes;
 using RPG.Statistics;
 using System.Collections.Generic;
 using RPG.Utils;
+using RPG.Inventories;
 
 namespace RPG.Combat
 {
@@ -13,21 +14,27 @@ namespace RPG.Combat
     {
         [SerializeField] Transform rightHandTransform = null;
         [SerializeField] Transform leftHandTransform = null;
-        [SerializeField] WeaponConfig defaultWeapon = null;
+        [SerializeField] EquipableItem defaultWeapon = null;
         [SerializeField] string defaultWeaponName = "Unarmed";
 
-        LazyValue<WeaponConfig> currentWeaponConfig;
+        LazyValue<EquipableItem> currentWeaponConfig;
 
         float timeSinceLastAttack;
         Health target;
         public Health Target { get { return target; } set { target = value; } }
 
         Animator animator;
+        Equipment equipment;
 
         void Awake()
         {
+            equipment = GetComponent<Equipment>();
             animator = GetComponent<Animator>();
-            currentWeaponConfig = new LazyValue<WeaponConfig>(InitializeDefaultWeapon);
+            currentWeaponConfig = new LazyValue<EquipableItem>(InitializeDefaultWeapon);
+            if (equipment)
+            {
+                equipment.equipmentUpdated += UpdateWeapon;
+            }            
         }
         void Start()
         {
@@ -35,7 +42,7 @@ namespace RPG.Combat
             EquipWeapon(currentWeaponConfig.value);        
         }
 
-        WeaponConfig InitializeDefaultWeapon()
+        EquipableItem InitializeDefaultWeapon()
         {
             return defaultWeapon;
         }
@@ -58,7 +65,7 @@ namespace RPG.Combat
             return Vector3.Distance(target, transform.position) 
                 <= currentWeaponConfig.value.WeaponRange;
         }
-        public void EquipWeapon(WeaponConfig weapon)
+        public void EquipWeapon(EquipableItem weapon)
         {
             if (weapon.WeaponDamage < 0)
             {
@@ -67,6 +74,16 @@ namespace RPG.Combat
             }
             weapon.Spawn(rightHandTransform, leftHandTransform, animator);
             currentWeaponConfig.value = weapon;
+        }
+         void UpdateWeapon()
+        {
+            EquipableItem item = equipment.GetItemInSlot(EquipLocation.Weapon);
+            if (item == null)
+            {
+                EquipWeapon(defaultWeapon);
+                return;
+            }
+            EquipWeapon(item);
         }
 
         public void Attack(GameObject enemyTarget)
@@ -121,7 +138,7 @@ namespace RPG.Combat
         public void RestoreState(object state)
         {
             defaultWeaponName = (string)state;
-            WeaponConfig weapon = Resources.Load<WeaponConfig>(defaultWeaponName);
+            EquipableItem weapon = Resources.Load<EquipableItem>(defaultWeaponName);
             EquipWeapon(weapon);
         }
 

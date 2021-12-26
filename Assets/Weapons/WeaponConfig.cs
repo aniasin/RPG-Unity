@@ -1,5 +1,6 @@
 
 using RPG.Attributes;
+using RPG.Inventories;
 using UnityEngine;
 
 namespace RPG.Combat

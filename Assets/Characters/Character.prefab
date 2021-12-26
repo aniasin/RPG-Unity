@@ -128,6 +128,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 2
   runSpeed: 5
+  maxNavProjectDistance: 1
+  maxWalkableDistance: 30
 --- !u!114 &420735347172395305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,7 +144,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rightHandTransform: {fileID: 0}
   leftHandTransform: {fileID: 0}
-  defaultWeapon: {fileID: 11400000, guid: e673f81b9e2c25442847b272e08ffb8f, type: 2}
+  defaultWeapon: {fileID: 11400000, guid: ade8f8b01aaeb5b4e9760b8c1a97699e, type: 2}
   defaultWeaponName: Unarmed
 --- !u!114 &2945403856407238259
 MonoBehaviour:

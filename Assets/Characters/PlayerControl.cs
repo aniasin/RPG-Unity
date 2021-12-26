@@ -23,6 +23,8 @@ namespace RPG.Control
             public Vector2 hotspot;
         }
 
+        bool isDragingUi;
+
         Mover mover;
         Fighter fighter;
         Health health;
@@ -55,7 +57,15 @@ namespace RPG.Control
         bool InteractWithUi()
         {
             bool isOnUi = EventSystem.current.IsPointerOverGameObject();
-            if (isOnUi) SetCursor(CursorType.UI);
+            if (isOnUi)
+            {
+                SetCursor(CursorType.UI);
+                isDragingUi = Input.GetMouseButton(0);
+            }
+            else if (!Input.GetMouseButton(0))
+            {
+                isDragingUi = false;
+            }
             return isOnUi;
         }
 
@@ -85,7 +95,7 @@ namespace RPG.Control
 
         bool InteractWithMovement()
         {
-            if (Input.GetKey(KeyCode.LeftShift)) return false;
+            if (Input.GetKey(KeyCode.LeftShift) || isDragingUi) return false;
             Vector3 targetPosition;
             bool hasHit = RaycastNavMesh(out targetPosition);
 

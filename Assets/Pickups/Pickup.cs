@@ -1,45 +1,67 @@
-using RPG.Control;
-using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace RPG.Combat
+namespace RPG.Inventories
 {
-    public class Pickup : MonoBehaviour, IRaycastable
+    /// <summary>
+    /// To be placed at the root of a Pickup prefab. Contains the data about the
+    /// pickup such as the type of item and the number.
+    /// </summary>
+    public class Pickup : MonoBehaviour
     {
-        [SerializeField] WeaponConfig weaponConfig = null;
-        [SerializeField] float timeToRespawn = 5;
+        // STATE
+        InventoryItem item;
+        int number = 1;
 
-        void PickUp(Fighter fighterComp)
+        // CACHED REFERENCE
+        Inventory inventory;
+
+        // LIFECYCLE METHODS
+
+        private void Awake()
         {
-            fighterComp.EquipWeapon(weaponConfig);
-            StartCoroutine(respawn(timeToRespawn));
+            var player = GameObject.FindGameObjectWithTag("Player");
+            inventory = player.GetComponent<Inventory>();
         }
 
-        IEnumerator respawn(float time)
-        {
-            Show(false);
-            yield return new WaitForSeconds(time);
-            Show(true);
-        }
+        // PUBLIC
 
-        void Show(bool shouldShow)
+        /// <summary>
+        /// Set the vital data after creating the prefab.
+        /// </summary>
+        /// <param name="item">The type of item this prefab represents.</param>
+        /// <param name="number">The number of items represented.</param>
+        public void Setup(InventoryItem item, int number)
         {
-            GetComponent<Collider>().enabled = shouldShow;
-            GetComponentInChildren<MeshRenderer>().enabled = shouldShow;
-        }
-        public bool HandleRaycast(PlayerControl playerControl)
-        {
-            if (Input.GetMouseButtonDown(0))
+            this.item = item;
+            if (!item.IsStackable())
             {
-                PickUp(playerControl.GetComponent<Fighter>());
+                number = 1;
             }
-            return true;
+            this.number = number;
         }
 
-        public CursorType GetCursorType()
+        public InventoryItem GetItem()
         {
-            return CursorType.PICKUP;
+            return item;
         }
 
+        public int GetNumber()
+        {
+            return number;
+        }
+
+        public void PickupItem()
+        {
+            bool foundSlot = inventory.AddToFirstEmptySlot(item, number);
+            if (foundSlot)
+            {
+                Destroy(gameObject);
+            }
+        }
+
+        public bool CanBePickedUp()
+        {
+            return inventory.HasSpaceFor(item);
+        }
     }
 }

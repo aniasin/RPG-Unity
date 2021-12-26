@@ -9,14 +9,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0b8cc900987be540ae8339154dc149c, type: 3}
+  m_Script: {fileID: 11500000, guid: f20eb1792e8048a46bf5c7c520a3ea3b, type: 3}
   m_Name: Sword
   m_EditorClassIdentifier: 
+  itemID: e67917ed-7049-409a-8417-5d28e1918dd4
+  displayName: sword
+  description: 
+  icon: {fileID: 21300000, guid: d19901b0ee3c38743a7d383bd484b0b5, type: 3}
+  pickup: {fileID: 2172726406262638583, guid: 0a0a2e6bb309bfe44a4c76b4b42adc51, type: 3}
+  stackable: 0
+  allowedEquipLocation: 5
   weapon: {fileID: 250415200935579648, guid: 64e777333236de943bb9274f88ccf356, type: 3}
   projectile: {fileID: 0}
   isLeftHand: 0
+  isRanged: 0
   animatorOverride: {fileID: 22100000, guid: 61f9bfce7d00ca74cb5161470d03ba3f, type: 2}
   weaponDamage: 10
   weaponMultiplier: 10
   weaponSpeed: 1
-  weaponRange: 3
+  weaponRange: 2

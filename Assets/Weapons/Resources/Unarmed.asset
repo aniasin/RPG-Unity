@@ -9,14 +9,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0b8cc900987be540ae8339154dc149c, type: 3}
+  m_Script: {fileID: 11500000, guid: f20eb1792e8048a46bf5c7c520a3ea3b, type: 3}
   m_Name: Unarmed
   m_EditorClassIdentifier: 
+  itemID: e67917ed-7049-409a-8417-5d28e1918dd4
+  displayName: unarmed
+  description: 
+  icon: {fileID: 21300000, guid: f8078c2bb5ee88d4a9472f76e501e0f3, type: 3}
+  pickup: {fileID: 2172726406262638583, guid: 0a0a2e6bb309bfe44a4c76b4b42adc51, type: 3}
+  stackable: 0
+  allowedEquipLocation: 5
   weapon: {fileID: 4208937585225790983, guid: ec60aa195b3d2e744a7472c8cd45a231, type: 3}
   projectile: {fileID: 0}
   isLeftHand: 0
+  isRanged: 0
   animatorOverride: {fileID: 22100000, guid: 1faba4220af082142bfd68d45c3a10b5, type: 2}
-  weaponDamage: 5
+  weaponDamage: 10
   weaponMultiplier: 10
-  weaponSpeed: 0.5
+  weaponSpeed: 1
   weaponRange: 2
